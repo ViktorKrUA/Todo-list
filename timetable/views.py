@@ -31,25 +31,25 @@ class TagDeleteView(generic.DeleteView):
     model = Tag
     fields = "__all__"
     template_name = "timetable/tag_confirm_delete.html"
-    success_url = reverse_lazy("timetable:tag-delete")
+    success_url = reverse_lazy("timetable:tag-list")
 
 
 class TaskListViews(generic.ListView):
-    model = Tag
+    model = Task
     context_object_name = "task_list"
     template_name = "timetable/task_list.html"
     paginate_by = 5
 
 
 class TaskCreateView(generic.CreateView):
-    model = Tag
+    model = Task
     fields = "__all__"
     template_name = "timetable/task_form.html"
     success_url = reverse_lazy("timetable:task-list")
 
 
 class TaskUpdateView(generic.UpdateView):
-    model = Tag
+    model = Task
     fields = "__all__"
     template_name = "timetable/task_form.html"
     success_url = reverse_lazy("timetable:task-list")
@@ -71,7 +71,7 @@ class TaskUpdateCompletionView(View):
 
 
 class TaskDeleteView(generic.DeleteView):
-    model = Tag
+    model = Task
     fields = "__all__"
     template_name = "timetable/task_confirm_delete.html"
-    success_url = reverse_lazy("timetable:task-delete")
+    success_url = reverse_lazy("timetable:task-list")
