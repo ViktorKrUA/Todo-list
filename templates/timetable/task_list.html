@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+      <h1  style="margin: 5px;">TODO list
+        <a href="{% url 'timetable:task-create' %}" class="btn btn-primary" style="float: right;">
+          Add Task
+       </a>
+      </h1>
+      <div class="row">
+          <!-- Blog Entries Column -->
+          {% if task_list %}
+          <div class="col-md-11 left">
+              {% for task in task_list %}
+              <div class="card mb-2">
+                  <div class="card-body">
+                      <h4 class="card-title">{{ task.content}}
+                      {% if task.is_completed %}
+                        <span style="color:green">Done</span>
+                      </h4>
+                          <form action="{% url "timetable:update-completion" pk=task.id %}" method="post" style="float: right;">
+                            {% csrf_token %}
+                            <input type="hidden" name="task_id" value="{{ task.id }}">
+                            <input type="submit" value="Undo" class="btn btn-secondary justify">
+                          </form>
+                        <p>Created: {{ task.created }}</p>
+                        {% else %}
+                          <span style="color:red">Not done</span>
+                            <form action="{% url "timetable:update-completion" pk=task.id %}" method="post" style="float: right;">
+                            {% csrf_token %}
+                            <input type="hidden" name="task_id" value="{{ task.id }}">
+                            <input type="submit" value="Complete" class="btn btn-success justify">
+                          </form>
+                         <p class="card-text text-muted h6">created: {{ task.created }} | deadline: {{ task.deadline }}</p>
+                      {% endif %}
+                      <p class="card-text text-muted h6">
+                        Tags: {% for tag in task.tags.all %} {{ tag.name }} {% endfor %}
+                        <a href="{% url 'timetable:task-update' pk=task.id %}">
+                          Update
+                        </a>
+                        <a href="{% url 'timetable:task-delete' pk=task.id %}">
+                          Delete
+                        </a>
+                      </p>
+                  </div>
+              </div>
+              {% endfor %}
+          </div>
+      {% endif %}
+      </div>
+{% endblock %}
