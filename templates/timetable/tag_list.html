@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+  <h1 style="margin: 5px">
+    Tags
+    <a href="{% url 'timetable:tag-create' %}" class="btn btn-primary" style="float: right;">
+      Create
+    </a>
+  </h1>
+  {% if tag_list %}
+      <table class="table">
+        <tr style="color: indigo">
+          <th><strong>Name</strong></th>
+          <th><strong>Update</strong></th>
+          <th><strong>Delete</strong></th>
+        </tr>
+
+        {% for tag in tag_list %}
+          <tr>
+            <td>
+              <strong>{{ tag.name }}</strong>
+            </td>
+            <td>
+              <a href="{% url "timetable:tag-update" pk=tag.id %} "class="btn btn-primary link-to-page btn-sm">Update</a>
+            </td>
+            <td>
+              <a href="{% url "timetable:tag-delete" pk=tag.id %}" class="btn btn-danger link-to-page btn-sm">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+      </table>
+  {% else %}
+    <p>No tags yet</p>
+  {% endif %}
+{% endblock %}
